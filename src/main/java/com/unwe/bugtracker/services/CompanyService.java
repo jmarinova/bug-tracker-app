@@ -1,0 +1,6 @@
+package com.unwe.bugtracker.services;
+
+import java.util.List;
+
+public interface CompanyService {
+}
