@@ -1,17 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <body>
 <nav class="navbar navbar-toggleable-md navbar-inverse" style="background-color: #900c45;" th:fragment="menu">
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">Bug Tracker</a>
+    <a class="navbar-brand" href="/">
+        <img th:src="@{/images/bug-black.png}" width="30" height="30" class="d-inline-block align-top" alt=""/>
+        Bug Tracker</a>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="/">Home</a>
             </li>
+            <div sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownUsersLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Users
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownUsersLink">
+                        <a class="dropdown-item" href="/users">Show</a>
+                        <a class="dropdown-item" href="/users/add">Add</a>
+                    </div>
+                </li>
+            </div>
+            <div sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownClientsLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Clients
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownClientsLink">
+                        <a class="dropdown-item" href="/clients">Show</a>
+                        <a class="dropdown-item" href="/clients/add">Add</a>
+                    </div>
+                </li>
+            </div>
+            <div sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownProductsLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Products
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownProductsLink">
+                        <a class="dropdown-item" href="/products">Show</a>
+                        <a class="dropdown-item" href="/products/add">Add</a>
+                    </div>
+                </li>
+            </div>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Issues
@@ -21,8 +62,11 @@
                     <a class="dropdown-item" href="/issues/add">Add</a>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/">Map</a>
+            <li class="nav-item pull-xs-right" sec:authorize="isAnonymous()">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item pull-xs-right" sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="/logout">Logout</a>
             </li>
         </ul>
     </div>
