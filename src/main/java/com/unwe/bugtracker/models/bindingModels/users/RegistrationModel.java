@@ -1,8 +1,10 @@
-package com.unwe.bugtracker.models.bindingModels;
+package com.unwe.bugtracker.models.bindingModels.users;
 
 
 import com.unwe.bugtracker.annotations.IsPasswordsMatching;
+import com.unwe.bugtracker.entities.Company;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -15,9 +17,17 @@ public class RegistrationModel {
     @Size(min = 5, message = "Password too short")
     private String password;
 
+    @Size(min = 5, message = "Confirm Password shorter than 5 symbols")
     private String confirmPassword;
 
-    private List<String> roles;
+    @Size(min = 5, message = "Full name too short")
+    private String fullName;
+
+    @NotNull(message = "Company cannot be null!")
+    private long company;
+
+    @NotNull(message = "Role cannot be null!")
+    private String role;
 
     public String getUsername() {
         return username;
@@ -43,11 +53,27 @@ public class RegistrationModel {
         this.confirmPassword = confirmPassword;
     }
 
-    public List<String> getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public long getCompany() {
+        return company;
+    }
+
+    public void setCompany(long company) {
+        this.company = company;
     }
 }

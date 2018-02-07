@@ -1,16 +1,6 @@
-package com.unwe.bugtracker.entities;
+package com.unwe.bugtracker.models.viewModels.product;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-@Entity
-@Table(name = "products")
-public class Product {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AllProductsViewModel {
     private long id;
 
     private String name;
@@ -18,13 +8,6 @@ public class Product {
     private String version;
 
     private String releaseDate;
-
-    @ManyToMany(mappedBy = "products", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Company> companies;
-
-    public Product() {
-        this.companies = new ArrayList<>();
-    }
 
     public long getId() {
         return id;
@@ -48,14 +31,6 @@ public class Product {
 
     public void setVersion(String version) {
         this.version = version;
-    }
-
-    public List<Company> getCompanies() {
-        return companies;
-    }
-
-    public void setCompanies(List<Company> companies) {
-        this.companies = companies;
     }
 
     public String getReleaseDate() {

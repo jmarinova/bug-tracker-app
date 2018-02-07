@@ -2,7 +2,7 @@ package com.unwe.bugtracker.controllers;
 
 import com.unwe.bugtracker.constants.Constants;
 import com.unwe.bugtracker.enums.Role;
-import com.unwe.bugtracker.models.bindingModels.RegistrationModel;
+import com.unwe.bugtracker.models.bindingModels.users.RegistrationModel;
 import com.unwe.bugtracker.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,13 +30,13 @@ public class UserController {
     @GetMapping("/register")
     public String getRegisterPage(@ModelAttribute RegistrationModel registrationModel){
 
-        return "register";
+        return "admin-users-add";
     }
 
     @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute RegistrationModel registrationModel, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return "register";
+            return "admin-users-add";
         }
 
         this.userService.register(registrationModel);

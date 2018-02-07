@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add new Product</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<nav th:replace="fragments/menu::menu"></nav>
+<br/>
+<div class="container">
+    <h1>Add new Product</h1>
+    <form method="post" th:object="${addProductModel}">
+        <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-danger'">
+            <label class="form-control-label" for="inputName">Product name</label>
+            <input type="text" class="form-control form-control-danger" id="inputName" th:field="*{name}"/>
+            <div class="form-control-feedback" th:each="error : ${#fields.errors('name')}" th:text="${error}">Error message</div>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('version')}? 'has-danger'">
+            <label class="form-control-label" for="inputVersion">Version</label>
+            <input type="text" class="form-control form-control-danger" id="inputVersion" th:field="*{version}"/>
+            <div class="form-control-feedback" th:each="error : ${#fields.errors('version')}" th:text="${error}">Error message</div>
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('releaseDate')}? 'has-danger'">
+            <label for="releaseDate">Release Date</label>
+            <input type="date" class="form-control" id="releaseDate" aria-describedby="releaseDateHelp" name="releaseDate" th:field="*{releaseDate}"/>
+            <small id="releaseDateHelp" class="form-control-feedback" th:each="error : ${#fields.errors('releaseDate')}" th:text="${error}">Error Message</small>
+        </div>
+
+        <input type="submit" class="btn btn-primary"/>
+    </form>
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>
