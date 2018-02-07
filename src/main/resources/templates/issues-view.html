@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Home</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+<nav th:replace="fragments/menu::menu"></nav>
+<br/>
+
+<div class="container">
+    <br/>
+    <div class="h1">All Issues</div>
+    <br/>
+
+    <!--<div class="form-group">-->
+        <!--<label for="filter">Filter by product(s)</label>-->
+        <!--<select multiple="true" class="form-control" id="filter" name="filter" value="filter">-->
+            <!--<option href="" th:each="product : ${products}" th:value="${product}" th:text="${product}">1</option>-->
+        <!--</select>-->
+    <!--</div>-->
+    <!--<div class="col-sm-2">-->
+        <!--<button type="submit" class="btn btn-default">Filter</button>-->
+    <!--</div>-->
+
+    <form method="get">
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label for="filter">Filter by product(s)</label>
+                    <select multiple="true" class="form-control" id="filter" name="filter" value="filter">
+                        <option href="" th:each="product : ${products}" th:value="${product}" th:text="${product}">1</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="form-group">
+                    <input name="name" type="text" class="form-control" placeholder="Search"></input>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-default">Search</button>
+            </div>
+        </div>
+    </form>
+
+    <span class="badge badge-info">Info</span>
+    <span class="badge badge-warning">Warning</span>
+    <span class="badge badge-danger">Danger</span>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Product affected</th>
+            <th>Author</th>
+            <th></th>
+            <div sec:authorize="hasRole('ADMIN')"><th ></th></div>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="issue : ${issuesViewModels}" th:object="${issue}">
+            <td th:text="*{id}">Id</td>
+            <td>
+                <a th:href="@{/issues/view/{id}(id=${issue.id})}" th:text="*{name}" class="btn btn-outline-info">Name</a>
+            </td>
+            <td th:text="*{status}">Status</td>
+            <td th:text="*{issueType}">Type</td>
+            <td th:text="*{product.getName() + ' - version' + product.getVersion()}">Product affected</td>
+            <td th:text="*{author.getUsername()}">Author</td>
+            <div sec:authorize="hasRole('USER') or hasRole('ADMIN')">
+                <td><a th:href="@{/issue/edit/{id}(id=${issue.id})}" class="btn btn-outline-warning">Edit</a></td>
+            </div>
+            <td sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/issue/delete/{id}(id=${issue.id})}" class="btn btn-outline-danger">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

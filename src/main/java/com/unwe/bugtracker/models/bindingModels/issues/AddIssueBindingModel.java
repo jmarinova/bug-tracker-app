@@ -1,4 +1,4 @@
-package com.unwe.bugtracker.models.bindingModels;
+package com.unwe.bugtracker.models.bindingModels.issues;
 
 import com.unwe.bugtracker.entities.Product;
 import com.unwe.bugtracker.entities.User;
@@ -15,14 +15,16 @@ public class AddIssueBindingModel {
     @Size(min = 3, max = 100, message = "Invalid description")
     private String description;
 
-//    @NotNull(message = "Product cannot be null!")
-    private Product product;
+    @NotNull(message = "Product cannot be null!")
+    private String product;
 
-//    @NotNull(message = "Status cannot be null!")
+    @NotNull(message = "Status cannot be null!")
     private Status status;
 
-//    @NotNull(message = "Issue cannot be null!")
+    @NotNull(message = "Issue cannot be null!")
     private IssueType issueType;
+
+    private User author;
 
     public String getName() {
         return name;
@@ -40,11 +42,11 @@ public class AddIssueBindingModel {
         this.description = description;
     }
 
-    public Product getProduct() {
+    public String getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(String product) {
         this.product = product;
     }
 
@@ -62,5 +64,13 @@ public class AddIssueBindingModel {
 
     public void setIssueType(IssueType issueType) {
         this.issueType = issueType;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }

@@ -14,10 +14,6 @@
         <div id="descHelp" class="form-control-feedback" th:each="error : ${#fields.errors('description')}" th:text="${error}">Error Message</div>
     </div>
 
-
-
-
-
     <fieldset class="form-group" th:classappend="${#fields.hasErrors('status')} ?'has-danger'">
         <legend>Choose Status</legend>
         <div class="form-check" th:each="status : ${statuses}">
@@ -28,20 +24,12 @@
         <div id="statHelp" class="form-control-feedback" th:each="error : ${#fields.errors('status')}" th:text="${error}">Error Message</div>
     </fieldset>
 
-
-
-    <!--<div class="form-group">-->
-        <!--<label for="hrs">Hours Until Turn</label>-->
-        <!--<input type="number" class="form-control" id="hrs" aria-describedby="hrsHelp" th:field="*{hoursToTurn}"/>-->
-        <!--<small id="hrsHelp" class="form-text text-muted">Error Message</small>-->
-    <!--</div>-->
-
-    <!--<div class="form-group">-->
-        <!--<label for="exampleSelect1">Magnitude</label>-->
-        <!--<select class="form-control" id="exampleSelect1" th:field="*{magnitude}">-->
-            <!--<option th:each="magnitude : ${magnitudes}" th:value="${magnitude}" th:text="${#strings.capitalize(#strings.toLowerCase(magnitude))}">1</option>-->
-        <!--</select>-->
-    <!--</div>-->
+    <div class="form-group">
+        <label for="exampleSelect1">Issue type</label>
+        <select class="form-control" id="exampleSelect1" th:field="*{issueType}">
+            <option th:each="issueType : ${issueTypes}" th:value="${issueType}" th:text="${#strings.capitalize(#strings.toLowerCase(issueType))}">1</option>
+        </select>
+    </div>
 
 
     <div class="form-group" th:classappend="${#fields.hasErrors('product')} ?'has-danger'">

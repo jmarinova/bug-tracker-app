@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Register</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<nav th:replace="fragments/menu::menu"></nav>
+<br/>
+<div class="container">
+    <h1>Add new Company</h1>
+    <form method="post" th:object="${addCompanyModel}">
+        <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-danger'">
+            <label class="form-control-label" for="inputName">Company name</label>
+            <input type="text" class="form-control form-control-danger" id="inputName" th:field="*{name}"/>
+            <div class="form-control-feedback" th:each="error : ${#fields.errors('name')}" th:text="${error}">Error message</div>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('contactName')}? 'has-danger'">
+            <label class="form-control-label" for="inputContactName">Contact name</label>
+            <input type="text" class="form-control form-control-danger" id="inputContactName" th:field="*{contactName}"/>
+            <div class="form-control-feedback" th:each="error : ${#fields.errors('contactName')}" th:text="${error}">Error message</div>
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('contactPhoneNumber')} ? 'has-danger'">
+            <label class="form-control-label" for="inputContactPhoneNumber">Contact phone number</label>
+            <input type="text" class="form-control form-control-danger" id="inputContactPhoneNumber" th:field="*{contactPhoneNumber}"/>
+            <div class="form-control-feedback" th:each="error : ${#fields.errors('contactPhoneNumber')}" th:text="${error}">Error message</div>
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('startContractDate')}? 'has-danger'">
+            <label for="startContractDate">Start contract Date</label>
+            <input type="date" class="form-control" id="startContractDate" aria-describedby="startContractDateHelp" name="startContractDate" th:field="*{startContractDate}"/>
+            <small id="startContractDateHelp" class="form-control-feedback" th:each="error : ${#fields.errors('startContractDate')}" th:text="${error}">Error Message</small>
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('endContractDate')}? 'has-danger'">
+            <label for="endContractDate">End contract Date</label>
+            <input type="date" class="form-control" id="endContractDate" aria-describedby="endContractDateHelp" name="endContractDate" th:field="*{endContractDate}"/>
+            <small id="endContractDateHelp" class="form-control-feedback" th:each="error : ${#fields.errors('endContractDate')}" th:text="${error}">Error Message</small>
+        </div>
+
+        <fieldset class="form-group" th:classappend="${#fields.hasErrors('products')}? 'has-danger'">
+            <legend>Choose products</legend>
+            <div class="form-check" th:each="product,iter : ${products}">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" id="optionsRadios1" th:value="${product.getId()}" th:field="*{products}"/>
+                    <span th:text="${product.getName() + ' - version ' + product.getVersion()}"></span>
+                </label>
+            </div>
+            <small id="toHelp" class="form-control-feedback" th:each="error : ${#fields.errors('products')}" th:text="${error}">Error Message</small>
+        </fieldset>
+
+        <input type="submit" class="btn btn-primary"/>
+    </form>
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

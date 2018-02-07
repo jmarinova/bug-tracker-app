@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Home</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+<nav th:replace="fragments/menu::menu"></nav>
+<br/>
+
+<div class="container">
+    <br/>
+    <div class="h1" th:text="${issueViewModel.name}">Issue name</div>
+    <br/>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Product affected</th>
+            <th>Author</th>
+            <th>Assigned to</th>
+            <th>Created on</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:object="${issueViewModel}">
+            <td th:text="*{description}"></td>
+            <td th:text="*{status}">Status</td>
+            <td th:text="*{issueType}">Type</td>
+            <td th:text="*{product.getName() + ' - version' + product.getVersion()}">Product affected</td>
+            <td th:text="*{author.getUsername()}">Author</td>
+            <td th:text="*{assignedTo != null} ? *{assignedTo.getUsername()} : 'none'">Assigned to</td>
+            <td th:text="*{createdOn}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br/>
+    <h4 th:text="${issueViewModel.getComments() != null} ? 'Comments'"></h4>
+
+    <div class="list-group"  th:each="comment : ${issueViewModel.getComments()}" th:object="${comment}">
+        <a href="#" class="list-group-item list-group-item-action  flex-column align-items-start"
+           th:classappend="*{author == issue.getAuthor()} ? 'list-group-item-danger' : 'list-group-item-info' ">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1" th:text="*{author.getUsername()}">Author</h5>
+                <small th:text="*{createdOn}">3 days ago</small>
+            </div>
+            <p class="mb-1" th:text="*{value}"/>
+        </a>
+
+    </div>
+
+    <!--<form method="post" th:object="${issueViewModel}">-->
+        <!--<fieldset>-->
+            <!--<div class="form-group">-->
+                <!--<label for="name">Name</label>-->
+                <!--<input type="text" id="name" class="form-control" th:value="*{name}"/>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<label for="name">Description</label>-->
+                <!--<input type="text" id="description" class="form-control" th:value="*{description}"/>-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+                <!--<label for="name">Status</label>-->
+                <!--<input type="text" id="status" class="form-control" th:value="*{status}"/>-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+                <!--<label for="name">Issue Type</label>-->
+                <!--<input type="text" id="issueType" class="form-control" th:value="*{issueType}"/>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<label for="name">Product</label>-->
+                <!--<input type="text" id="product" class="form-control" th:value="*{product.getName() + ' - version: ' + product.getVersion()}"/>-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+                <!--<label for="disabledSelect">Disabled select menu</label>-->
+                <!--<select id="disabledSelect" class="form-control">-->
+                    <!--<option>Disabled select</option>-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</fieldset>-->
+        <!--<button type="submit" th:href="@{/issues/edit/{id}(id=${issueViewModel.id})}" class="btn btn-primary">Edit</button>-->
+    <!--</form>-->
+    <br/>
+    <form method="post" th:object="${commentModel}" value="">
+        <div class="form-group" th:classappend="${#fields.hasErrors('value')} ? 'has-danger'" >
+            <label class="form-control-label" for="comment">Add Comment</label>
+            <textarea type="text" class="form-control" id="comment" aria-describedby="commentHelp" th:field="*{value}"/>
+            <div id="commentHelp" class="form-control-feedback" th:each="error : ${#fields.errors('value')}" th:text="${error}">Error Message</div>
+        </div>
+        <button type="submit" name="comment" th:value="${issueViewModel.id}" class="btn btn-primary">Comment</button>
+
+    </form>
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

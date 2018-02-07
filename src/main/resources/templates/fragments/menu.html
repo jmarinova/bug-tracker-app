@@ -24,37 +24,37 @@
                         Users
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownUsersLink">
-                        <a class="dropdown-item" href="/users">Show</a>
-                        <a class="dropdown-item" href="/users/add">Add</a>
+                        <a class="dropdown-item" href="/admin/users">Show</a>
+                        <a class="dropdown-item" href="/admin/users/add">Add</a>
                     </div>
                 </li>
             </div>
             <div sec:authorize="hasRole('ADMIN')">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownClientsLink"
+                    <a class="nav-link dropdown-toggle" href="/admin/companies" id="navbarDropdownClientsLink"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Clients
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownClientsLink">
-                        <a class="dropdown-item" href="/clients">Show</a>
-                        <a class="dropdown-item" href="/clients/add">Add</a>
+                        <a class="dropdown-item" href="/admin/companies">Show</a>
+                        <a class="dropdown-item" href="/admin/companies/add">Add</a>
                     </div>
                 </li>
             </div>
             <div sec:authorize="hasRole('ADMIN')">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownProductsLink"
+                    <a class="nav-link dropdown-toggle" href="/admin/products" id="navbarDropdownProductsLink"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Products
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownProductsLink">
-                        <a class="dropdown-item" href="/products">Show</a>
-                        <a class="dropdown-item" href="/products/add">Add</a>
+                        <a class="dropdown-item" href="/admin/products">Show</a>
+                        <a class="dropdown-item" href="/admin/products/add">Add</a>
                     </div>
                 </li>
             </div>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="/issues" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Issues
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

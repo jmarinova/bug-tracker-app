@@ -5,9 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -32,12 +30,14 @@ public class User implements UserDetails{
 
     private boolean isEnabled;
 
+    @OneToMany(mappedBy = "author")
+    private List<Comment> comments;
 
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @OneToMany(mappedBy = "createdBy")
+    @OneToMany(mappedBy = "author")
     private List<Issue> loggedIssues;
 
     @OneToMany(mappedBy = "assignedTo")
