@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Home</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+<nav th:replace="fragments/menu::menu"></nav>
+<br/>
+
+<div class="container">
+    <br/>
+    <div class="h1">All Clients</div>
+    <br/>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Contact person</th>
+            <th>Contact phone number</th>
+            <th>Start contract date</th>
+            <th>End contract date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="company : ${companiesViewModels}" th:object="${company}">
+            <td th:text="*{id}">id</td>
+            <td th:text="*{name}">name</td>
+            <td th:text="*{contactName}">contactName</td>
+            <td th:text="*{contactPhoneNumber}">contactPhoneNumber</td>
+            <td th:text="*{#dates.format(startContractDate, 'yyyy-MM-dd')}">startContractDate</td>
+            <td th:text="*{#dates.format(endContractDate, 'yyyy-MM-dd')}">endContractDate</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -18,12 +18,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
+//    @Autowired
+//    private SpringCustomAuthenticationProvider customAuthenticationProvider;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(this.userService)
                 .passwordEncoder(getBCryptPasswordEncoder())
                 .and()
+//                .authenticationProvider(customAuthenticationProvider)
                 .inMemoryAuthentication()
                 .withUser("joana").password("joana").roles("USER")
                 .and()

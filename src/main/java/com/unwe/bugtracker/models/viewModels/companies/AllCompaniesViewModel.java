@@ -1,17 +1,12 @@
-package com.unwe.bugtracker.entities;
+package com.unwe.bugtracker.models.viewModels.companies;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import com.unwe.bugtracker.entities.Product;
+
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "companies")
-public class Company {
+public class AllCompaniesViewModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private long id;
 
     private String name;
@@ -24,19 +19,7 @@ public class Company {
 
     private Date endContractDate;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "companies_products",
-        joinColumns = @JoinColumn(name="company_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name="product_id", referencedColumnName = "id"))
     private List<Product> products;
-
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
-    private List<User> users;
-
-    public Company() {
-        this.products = new ArrayList<>();
-        this.users = new ArrayList<>();
-    }
 
     public long getId() {
         return id;
@@ -52,22 +35,6 @@ public class Company {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
     public String getContactName() {
@@ -98,7 +65,15 @@ public class Company {
         return endContractDate;
     }
 
-    public void setEndContractDate(Date endContractate) {
-        this.endContractDate = endContractate;
+    public void setEndContractDate(Date endContractDate) {
+        this.endContractDate = endContractDate;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

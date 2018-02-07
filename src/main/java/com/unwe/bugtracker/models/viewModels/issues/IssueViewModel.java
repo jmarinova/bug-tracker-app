@@ -1,57 +1,35 @@
-package com.unwe.bugtracker.entities;
+package com.unwe.bugtracker.models.viewModels.issues;
 
+import com.unwe.bugtracker.entities.Comment;
+import com.unwe.bugtracker.entities.Product;
+import com.unwe.bugtracker.entities.User;
 import com.unwe.bugtracker.enums.IssueType;
 import com.unwe.bugtracker.enums.Status;
 
-import javax.persistence.*;
+import javax.persistence.EnumType;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "issues")
-public class Issue {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class IssueViewModel {
     private long id;
 
     private String name;
 
     private String description;
 
-    @Enumerated(value = EnumType.STRING)
     private Status status;
 
-    @Enumerated(value = EnumType.STRING)
     private IssueType issueType;
 
-    @OneToOne
     private Product product;
 
-    @OneToMany(mappedBy = "issue")
-    private List<Comment> comments;
-
-    @ManyToOne
-    @JoinColumn(name = "author_id", updatable = false)
     private User author;
 
-    @Column(name = "created_on", updatable=false)
     private Date createdOn;
 
-    @ManyToOne
     private User assignedTo;
 
-    public Issue() {
-
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+    private List<Comment> comments;
 
     public String getName() {
         return name;
@@ -97,8 +75,16 @@ public class Issue {
         return author;
     }
 
-    public void setAuthor(User createdBy) {
-        this.author = createdBy;
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
     }
 
     public User getAssignedTo() {
@@ -109,12 +95,12 @@ public class Issue {
         this.assignedTo = assignedTo;
     }
 
-    public Date getCreatedOn() {
-        return createdOn;
+    public long getId() {
+        return id;
     }
 
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public List<Comment> getComments() {

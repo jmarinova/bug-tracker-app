@@ -1,6 +1,6 @@
 package com.unwe.bugtracker.annotations;
 
-import com.unwe.bugtracker.models.bindingModels.RegistrationModel;
+import com.unwe.bugtracker.models.bindingModels.users.RegistrationModel;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
