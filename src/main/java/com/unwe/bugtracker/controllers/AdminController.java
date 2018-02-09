@@ -4,6 +4,7 @@ import com.unwe.bugtracker.entities.Company;
 import com.unwe.bugtracker.entities.Product;
 import com.unwe.bugtracker.enums.Role;
 import com.unwe.bugtracker.models.bindingModels.company.AddCompanyModel;
+import com.unwe.bugtracker.models.bindingModels.company.EditCompanyModel;
 import com.unwe.bugtracker.models.bindingModels.product.AddProductModel;
 import com.unwe.bugtracker.models.bindingModels.users.RegistrationModel;
 import com.unwe.bugtracker.models.viewModels.companies.AllCompaniesViewModel;
@@ -16,12 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -80,6 +79,13 @@ public class AdminController {
     public String getRegisterUserPage(@ModelAttribute RegistrationModel registrationModel){
 
         return "admin-users-add";
+    }
+
+    @GetMapping("/admin/companies/edit/{id}")
+    public String getEditCompanyPage(Model model,
+                                    @PathVariable long id){
+        model.addAttribute("editCompanyModel", this.companyService.getEditCompanyById(id));
+        return "admin-companies-edit";
     }
 
     @GetMapping("/admin/companies/add")

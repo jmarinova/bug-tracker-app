@@ -8,18 +8,21 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
     @Query(value = "SELECT p.name FROM Product AS p")
-    List<String> getProductsNames();
+    Set<String> getProductsNames();
 
     Product getById(long id);
 
     List<Product> getAllByCompaniesIn(List<Company> companies);
 
-    Product findByName(String name);
+    List<Product> getDistinctByCompanies(List<Company> companies);
+
+    Product findFirstByName(String name);
 
 //    List<Product> findDistinctByName();
 }

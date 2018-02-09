@@ -10,7 +10,7 @@
 <br/>
 <div class="container">
     <h1>Add new Company</h1>
-    <form method="post" th:object="${addCompanyModel}">
+    <form method="post" th:object="${editCompanyModel}">
         <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-danger'">
             <label class="form-control-label" for="inputName">Company name</label>
             <input type="text" class="form-control form-control-danger" id="inputName" th:field="*{name}"/>
@@ -40,7 +40,7 @@
             <small id="endContractDateHelp" class="form-control-feedback" th:each="error : ${#fields.errors('endContractDate')}" th:text="${error}">Error Message</small>
         </div>
 
-        <fieldset multiple="multiple" class="form-group" th:classappend="${#fields.hasErrors('products')}? 'has-danger'">
+        <fieldset class="form-group" th:classappend="${#fields.hasErrors('products')}? 'has-danger'">
             <legend>Choose products</legend>
             <div class="form-check" th:each="product,iter : ${products}">
                 <label class="form-check-label">

@@ -12,10 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -26,9 +23,9 @@ public class ProductServiceImpl implements ProductService {
     private ModelMapper modelMapper;
 
     @Override
-    public List<String> getProductsNames() {
+    public Set<String> getProductsNames() {
         Iterable<Product> products = this.productRepository.findAll();
-        List<String> namesList = new ArrayList<>();
+        Set<String> namesList = new HashSet<>();
 
         for (Product product : products) {
             namesList.add(product.getName());
@@ -87,6 +84,20 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findByName(String name) {
-        return this.productRepository.findByName(name);
+        Product product = this.productRepository.findFirstByName(name);
+        System.out.println();
+        return product;
+    }
+
+    @Override
+    public List<String> getAllByCompanies(List<Company> companies) {
+        List<Product> products = this.productRepository.getDistinctByCompanies(companies);
+        List<String> names = new ArrayList<>();
+
+        for (Product product : products) {
+            names.add(product.getName());
+        }
+
+        return names;
     }
 }

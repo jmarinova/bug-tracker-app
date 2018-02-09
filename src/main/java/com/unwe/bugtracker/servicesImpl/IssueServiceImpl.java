@@ -42,9 +42,32 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public List<AllIssuesViewModel> allIssuesViewModel() {
-        List<Issue> issues = this.findAll();
+    public List<Issue> findAllByProduct(List<String> products) {
+        List<Issue> allIssues = new ArrayList<>();
+
+        for (String product : products) {
+            if(product.equals("ALL")){
+                continue;
+            }
+            Product productObj = this.productService.findByName(product);
+            List<Issue> currentIssues = this.issueRepository.findAllByProduct(productObj);
+            allIssues.addAll(currentIssues);
+        }
+
+        return allIssues;
+    }
+
+    @Override
+    public List<AllIssuesViewModel> allIssuesViewModel(List<String> filters) {
+
         List<AllIssuesViewModel> allIssuesViewModels = new ArrayList<>();
+        List<Issue> issues = new ArrayList<>();
+
+        if (filters == null){
+            issues = this.findAll();
+        }else{
+            issues = this.findAllByProduct(filters);
+        }
 
         for (Issue issue : issues) {
             allIssuesViewModels.add(this.modelMapper.map(issue, AllIssuesViewModel.class));
@@ -62,6 +85,7 @@ public class IssueServiceImpl implements IssueService {
         User user = this.userService.findByUsername(principal.getName());
         issue.setAuthor(user);
         issue.setCreatedOn(new Date());
+
         this.issueRepository.save(issue);
     }
 
