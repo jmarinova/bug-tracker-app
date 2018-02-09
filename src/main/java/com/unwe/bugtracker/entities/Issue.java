@@ -25,7 +25,8 @@ public class Issue {
     @Enumerated(value = EnumType.STRING)
     private IssueType issueType;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "product_id", updatable = false)
     private Product product;
 
     @OneToMany(mappedBy = "issue")

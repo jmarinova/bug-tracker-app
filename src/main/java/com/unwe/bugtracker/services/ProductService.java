@@ -1,13 +1,15 @@
 package com.unwe.bugtracker.services;
 
+import com.unwe.bugtracker.entities.Company;
 import com.unwe.bugtracker.entities.Product;
 import com.unwe.bugtracker.models.bindingModels.product.AddProductModel;
 import com.unwe.bugtracker.models.viewModels.product.AllProductsViewModel;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ProductService {
-    List<String> getProductsNames();
+    Set<String> getProductsNames();
 
     List<Product> getAll();
 
@@ -20,4 +22,6 @@ public interface ProductService {
     Product getById(long id);
 
     Product findByName(String name);
+
+    List<String> getAllByCompanies(List<Company> companies);
 }

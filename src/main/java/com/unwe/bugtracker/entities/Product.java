@@ -19,6 +19,9 @@ public class Product {
 
     private String releaseDate;
 
+    @OneToMany(mappedBy = "product")
+    private List<Issue> issues;
+
     @ManyToMany(mappedBy = "products", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Company> companies;
 
@@ -64,5 +67,13 @@ public class Product {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public List<Issue> getIssues() {
+        return issues;
+    }
+
+    public void setIssues(List<Issue> issues) {
+        this.issues = issues;
     }
 }

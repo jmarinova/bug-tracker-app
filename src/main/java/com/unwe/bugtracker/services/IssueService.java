@@ -11,7 +11,9 @@ import java.util.List;
 public interface IssueService {
     List<Issue> findAll();
 
-    List<AllIssuesViewModel> allIssuesViewModel();
+    List<Issue> findAllByProduct(List<String> products);
+
+    List<AllIssuesViewModel> allIssuesViewModel(List<String> filters);
 
     void add(AddIssueBindingModel addIssueBindingModel, Principal principal);
 

@@ -1,5 +1,6 @@
 package com.unwe.bugtracker.controllers;
 
+import com.unwe.bugtracker.entities.Company;
 import com.unwe.bugtracker.enums.IssueType;
 import com.unwe.bugtracker.enums.Status;
 import com.unwe.bugtracker.models.bindingModels.comments.AddCommentModel;
@@ -16,7 +17,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class IssueController {
@@ -43,8 +47,29 @@ public class IssueController {
     }
 
     @ModelAttribute(name = "products")
-    public List<String> getProducts(){
-        return this.productService.getProductsNames();
+    public List<String> getProducts(@AuthenticationPrincipal Principal principal){
+        List<String> products = new ArrayList<>();
+        if(this.userService.findByUsername(principal.getName()) == null){
+            return products;
+        }
+
+        if(!this.userService.findByUsername(principal.getName()).getUsername().equals("admin")
+                && this.userService.findByUsername(principal.getName())!= null){
+            List<Company> companies = new ArrayList<>();
+            companies.add(this.userService.findByUsername(principal.getName()).getCompany());
+
+            products = this.productService.getAllByCompanies(companies);
+//            model.addAttribute("products", products);
+
+        }else{
+            Set<String> productsSet = this.productService.getProductsNames();
+            products.addAll(productsSet);
+//            model.addAttribute("products", products);
+        }
+
+        products.add("ALL");
+
+        return products;
     }
 
     @ModelAttribute(name = "statuses")
@@ -58,17 +83,22 @@ public class IssueController {
     }
 
     @GetMapping("/issues")
-    public String viewIssues(Model model,@RequestParam(value = "filter", required = false) List<String> filter,
+    public String viewIssues(Model model,
+                             @ModelAttribute ArrayList<String> products,
+                             @RequestParam(value = "filter", required = false) List<String> filter,
                              @AuthenticationPrincipal Principal principal){
-        List<AllIssuesViewModel> allIssues = this.issueService.allIssuesViewModel();
+
+        List<String> filterForIssues = new ArrayList<>();
+        if (filter == null || (filter != null && filter.indexOf("ALL") > -1)){
+            filterForIssues = (List<String>) model.asMap().get("products");
+        }else{
+            filterForIssues = filter;
+        }
+
+        List<AllIssuesViewModel> allIssues = this.issueService.allIssuesViewModel(filterForIssues);
+
         model.addAttribute("issuesViewModels", allIssues);
-//        if(this.userService.findByUsername(principal.getName()).getCompany() != null){
-//            List<String> products = this.productService
-//
-//        }else{
-//            List<String> products = this.productService.getAllProductNamesDistinct();
-//        }
-//        model.addAttribute("products", products);
+        model.addAttribute("currentUser", this.userService.findByUsername(principal.getName()));
 
         return "issues-view";
     }
@@ -91,9 +121,10 @@ public class IssueController {
             return "issue-add";
         }
         System.out.println(principal.getName());
+
         this.issueService.add(addIssueBindingModel, principal);
 
-        return "redirect:/issues/add";
+        return "redirect:/issues";
     }
 
     @PostMapping("/issues/view/{id}")
@@ -114,7 +145,9 @@ public class IssueController {
     }
 
     @GetMapping("/issues/add")
-    public String addIssue(@ModelAttribute AddIssueBindingModel addIssueBindingModel){
+    public String addIssue(Model model, @ModelAttribute AddIssueBindingModel addIssueBindingModel){
+        List<String> products = (List<String>) model.asMap().get("products");
+        products.remove("ALL");
 
         return "issue-add";
     }

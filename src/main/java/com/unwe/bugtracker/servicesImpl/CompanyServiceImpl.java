@@ -3,6 +3,7 @@ package com.unwe.bugtracker.servicesImpl;
 import com.unwe.bugtracker.entities.Company;
 import com.unwe.bugtracker.entities.Product;
 import com.unwe.bugtracker.models.bindingModels.company.AddCompanyModel;
+import com.unwe.bugtracker.models.bindingModels.company.EditCompanyModel;
 import com.unwe.bugtracker.models.viewModels.companies.AllCompaniesViewModel;
 import com.unwe.bugtracker.models.viewModels.product.AllProductsViewModel;
 import com.unwe.bugtracker.repositories.CompanyRepository;
@@ -52,6 +53,14 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Company getById(long id) {
         return this.companyRepository.getById(id);
+    }
+
+    @Override
+    public EditCompanyModel getEditCompanyById(long id) {
+        Company company = getById(id);
+        EditCompanyModel editCompanyModel = this.modelMapper.map(company, EditCompanyModel.class);
+
+        return  editCompanyModel;
     }
 
     @Override
