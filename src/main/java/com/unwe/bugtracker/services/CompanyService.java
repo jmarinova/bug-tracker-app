@@ -12,6 +12,8 @@ public interface CompanyService {
 
     void add(AddCompanyModel addCompanyModel);
 
+    void update(EditCompanyModel editCompanyModel);
+
     Company getById(long id);
 
     EditCompanyModel getEditCompanyById(long id);

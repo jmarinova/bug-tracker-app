@@ -18,9 +18,9 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     Product getById(long id);
 
-    List<Product> getAllByCompaniesIn(List<Company> companies);
+    List<Product> getAllByCompanies(List<Company> companies);
 
-    List<Product> getDistinctByCompanies(List<Company> companies);
+    Set<Product> getDistinctByCompanies(List<Company> companies);
 
     Product findFirstByName(String name);
 

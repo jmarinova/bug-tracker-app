@@ -2,6 +2,7 @@ package com.unwe.bugtracker.services;
 
 import com.unwe.bugtracker.entities.Issue;
 import com.unwe.bugtracker.models.bindingModels.issues.AddIssueBindingModel;
+import com.unwe.bugtracker.models.bindingModels.issues.EditIssueBindingModel;
 import com.unwe.bugtracker.models.viewModels.issues.AllIssuesViewModel;
 import com.unwe.bugtracker.models.viewModels.issues.IssueViewModel;
 
@@ -20,4 +21,10 @@ public interface IssueService {
     IssueViewModel getById(long id);
 
     Issue findIssueById(long id);
+
+    EditIssueBindingModel findById(long id);
+
+    void update(EditIssueBindingModel editIssueBindingModel);
+
+    void delete(long id);
 }

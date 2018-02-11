@@ -64,18 +64,11 @@ public class ProductServiceImpl implements ProductService {
         return allProductsViewModels;
     }
 
-//    @Override
-//    public List<String> getAllProductNamesDistinct() {
-//        List<Product> products = this.productRepository.findDistinctByName();
-//
-//        List<String> result = new ArrayList<>();
-//
-//        for (Product product : products) {
-//            result.add(product.getName());
-//        }
-//
-//        return result;
-//    }
+    @Override
+    public List<Product> getAllProductsByCompanies(List<Company> companies) {
+        List<Product> productList = this.productRepository.getAllByCompanies(companies);
+        return productList;
+    }
 
     @Override
     public Product getById(long id) {
@@ -90,9 +83,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<String> getAllByCompanies(List<Company> companies) {
-        List<Product> products = this.productRepository.getDistinctByCompanies(companies);
-        List<String> names = new ArrayList<>();
+    public Set<String> getAllByCompanies(List<Company> companies) {
+        Set<Product> products = this.productRepository.getDistinctByCompanies(companies);
+        Set<String> names = new HashSet<>();
 
         for (Product product : products) {
             names.add(product.getName());

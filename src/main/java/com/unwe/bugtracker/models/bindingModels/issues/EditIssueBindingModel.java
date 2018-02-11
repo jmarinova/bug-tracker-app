@@ -1,6 +1,5 @@
 package com.unwe.bugtracker.models.bindingModels.issues;
 
-import com.unwe.bugtracker.entities.Product;
 import com.unwe.bugtracker.entities.User;
 import com.unwe.bugtracker.enums.IssueType;
 import com.unwe.bugtracker.enums.Severity;
@@ -9,18 +8,18 @@ import com.unwe.bugtracker.enums.Status;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class AddIssueBindingModel {
-    @Size(min = 3, max = 80, message = "Invalid name")
+public class EditIssueBindingModel {
+
+    private long id;
+
+    @Size(min = 3, max = 100, message = "Invalid name")
     private String name;
 
-    @Size(min = 3, max = 100, message = "Invalid description")
+    @Size(min = 3, max = 200, message = "Invalid description")
     private String description;
 
-    @NotNull(message = "Product cannot be null!")
-    private String product;
-//
-//    @NotNull(message = "Status cannot be null!")
-//    private Status status;
+    @NotNull(message = "Status cannot be null!")
+    private Status status;
 
     @NotNull(message = "Severity cannot be null!")
     private Severity severity;
@@ -28,7 +27,7 @@ public class AddIssueBindingModel {
     @NotNull(message = "Issue cannot be null!")
     private IssueType issueType;
 
-    private User author;
+    private User assignedTo;
 
     public String getName() {
         return name;
@@ -46,21 +45,13 @@ public class AddIssueBindingModel {
         this.description = description;
     }
 
-    public String getProduct() {
-        return product;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setProduct(String product) {
-        this.product = product;
+    public void setStatus(Status status) {
+        this.status = status;
     }
-//
-//    public Status getStatus() {
-//        return status;
-//    }
-//
-//    public void setStatus(Status status) {
-//        this.status = status;
-//    }
 
     public IssueType getIssueType() {
         return issueType;
@@ -70,19 +61,27 @@ public class AddIssueBindingModel {
         this.issueType = issueType;
     }
 
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
     public Severity getSeverity() {
         return severity;
     }
 
     public void setSeverity(Severity severity) {
         this.severity = severity;
+    }
+
+    public User getAssignedTo() {
+        return assignedTo;
+    }
+
+    public void setAssignedTo(User assignedTo) {
+        this.assignedTo = assignedTo;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

@@ -8,18 +8,10 @@
 <body>
 <nav th:replace="fragments/menu::menu"></nav>
 <br/>
-<!--<div><p th:text="${principal.getUsername()}">session</p></div>-->
-
 <div class="container">
-    <div class="jumbotron">
-        <h1 class="display-3">Welcome to Bug Tracker!</h1>
-        <p class="lead"></p>
-        <hr class="my-4"/>
-        <p>Version 1.0.0 Beta</p>
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" href="/issues" role="button">View Issues</a>
-        </p>
-    </div>
+    <div class="h3">Edit</div>
+
+    <form th:replace="fragments/issue-edit-form::edit-form"></form>
 </div>
 <script th:src="@{/jquery/jquery.min.js}"></script>
 <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>

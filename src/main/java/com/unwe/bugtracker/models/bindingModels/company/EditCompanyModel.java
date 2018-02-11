@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 public class EditCompanyModel {
+    private long id;
+
     @Size(min = 2, message = "Company name too short")
     private String name;
 
@@ -75,5 +77,13 @@ public class EditCompanyModel {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

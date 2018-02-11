@@ -3,9 +3,11 @@ package com.unwe.bugtracker.servicesImpl;
 import com.unwe.bugtracker.constants.Constants;
 import com.unwe.bugtracker.entities.Role;
 import com.unwe.bugtracker.entities.User;
+import com.unwe.bugtracker.entities.VerificationToken;
 import com.unwe.bugtracker.models.bindingModels.users.RegistrationModel;
 import com.unwe.bugtracker.models.viewModels.user.AllUsersViewModel;
 import com.unwe.bugtracker.repositories.UserRepository;
+import com.unwe.bugtracker.repositories.VerificationTokenRepository;
 import com.unwe.bugtracker.services.CompanyService;
 import com.unwe.bugtracker.services.RoleService;
 import com.unwe.bugtracker.services.UserService;
@@ -25,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private VerificationTokenRepository tokenRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -75,13 +80,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(RegistrationModel registrationModel) {
+    public List<User> getAllByAuthorities(List<Role> roles) {
+        return this.userRepository.findAllByAuthorities(roles);
+    }
+
+    @Override
+    public User register(RegistrationModel registrationModel) {
         User user = this.modelMapper.map(registrationModel, User.class);
         String encryptedPassword = this.bCryptPasswordEncoder.encode(registrationModel.getPassword());
         user.setPassword(encryptedPassword);
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);
-        user.setEnabled(true);
         user.setCredentialsNonExpired(true);
 
         List<Role> authorities = new ArrayList<>();
@@ -89,7 +98,27 @@ public class UserServiceImpl implements UserService {
         user.setAuthorities(authorities);
 
         user.setCompany(this.companyService.getById(registrationModel.getCompany()));
+        user.setEnabled(true);
+        User userResult = this.userRepository.save(user);
+        System.out.println(userResult.getUsername());
+        return userResult;
+    }
 
+    @Override
+    public void createVerificationToken(User user, String token) {
+        VerificationToken myToken = new VerificationToken(token, user);
+        this.tokenRepository.save(myToken);
+    }
+
+    @Override
+    public void saveRegisteredUser(User user) {
         this.userRepository.save(user);
     }
+
+    @Override
+    public VerificationToken getVerificationToken(String VerificationToken) {
+        return this.tokenRepository.findByToken(VerificationToken);
+    }
+
+
 }

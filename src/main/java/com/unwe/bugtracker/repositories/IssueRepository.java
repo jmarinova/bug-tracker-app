@@ -15,4 +15,6 @@ public interface IssueRepository extends JpaRepository<Issue, Long>{
     List<Issue> findAll();
 
     List<Issue> findAllByProduct(Product product);
+
+    Issue findById(long id);
 }

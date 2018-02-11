@@ -50,6 +50,7 @@ public class User implements UserDetails{
     private List<Role> authorities;
 
     public User() {
+        this.isEnabled = false;
         this.assignedToIssues = new ArrayList<>();
         this.loggedIssues = new ArrayList<>();
         this.authorities = new ArrayList<>();
@@ -154,5 +155,13 @@ public class User implements UserDetails{
 
     public void setAuthorities(List<Role> authorities) {
         this.authorities = authorities;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

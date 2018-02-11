@@ -17,11 +17,11 @@ public interface ProductService {
 
     List<AllProductsViewModel> getAllViewModel();
 
-//    List<String> getAllProductNamesDistinct();
+    List<Product> getAllProductsByCompanies(List<Company> companies);
 
     Product getById(long id);
 
     Product findByName(String name);
 
-    List<String> getAllByCompanies(List<Company> companies);
+    Set<String> getAllByCompanies(List<Company> companies);
 }
