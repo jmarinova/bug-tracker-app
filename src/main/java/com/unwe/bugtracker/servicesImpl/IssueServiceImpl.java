@@ -4,7 +4,9 @@ import com.unwe.bugtracker.entities.Comment;
 import com.unwe.bugtracker.entities.Issue;
 import com.unwe.bugtracker.entities.Product;
 import com.unwe.bugtracker.entities.User;
+import com.unwe.bugtracker.enums.Status;
 import com.unwe.bugtracker.models.bindingModels.issues.AddIssueBindingModel;
+import com.unwe.bugtracker.models.bindingModels.issues.EditIssueBindingModel;
 import com.unwe.bugtracker.models.viewModels.issues.AllIssuesViewModel;
 import com.unwe.bugtracker.models.viewModels.issues.IssueViewModel;
 import com.unwe.bugtracker.repositories.IssueRepository;
@@ -84,6 +86,7 @@ public class IssueServiceImpl implements IssueService {
 
         User user = this.userService.findByUsername(principal.getName());
         issue.setAuthor(user);
+        issue.setStatus(Status.NEW);
         issue.setCreatedOn(new Date());
 
         this.issueRepository.save(issue);
@@ -99,4 +102,24 @@ public class IssueServiceImpl implements IssueService {
     public Issue findIssueById(long id) {
         return this.issueRepository.findOne(id);
     }
+
+    @Override
+    public EditIssueBindingModel findById(long id) {
+        Issue issue = this.issueRepository.findOne(id);
+        return this.modelMapper.map(issue, EditIssueBindingModel.class);
+    }
+
+    @Override
+    public void update(EditIssueBindingModel editIssueBindingModel) {
+        Issue issue = this.modelMapper.map(editIssueBindingModel, Issue.class);
+//        User assignedTo = this.userService.findByUsername();
+        issue.setAssignedTo(editIssueBindingModel.getAssignedTo());
+        this.issueRepository.save(issue);
+    }
+
+    @Override
+    public void delete(long id) {
+        this.issueRepository.delete(id);
+    }
+
 }

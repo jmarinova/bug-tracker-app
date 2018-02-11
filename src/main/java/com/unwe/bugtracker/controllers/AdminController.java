@@ -88,6 +88,17 @@ public class AdminController {
         return "admin-companies-edit";
     }
 
+    @PostMapping("/admin/companies/edit/{id}")
+    public String editCompanyPage(@Valid @ModelAttribute EditCompanyModel editCompanyModel, BindingResult bindingResult,
+                                    @PathVariable long id){
+        if(bindingResult.hasErrors()){
+            return "admin-companies-edit";
+        }
+        this.companyService.update(editCompanyModel);
+
+        return "redirect:/admin/companies";
+    }
+
     @GetMapping("/admin/companies/add")
     public String getAddCompanyPage(@ModelAttribute AddCompanyModel addCompanyModel){
         return "admin-companies-add";
@@ -125,7 +136,7 @@ public class AdminController {
 
         this.productService.add(addProductModel);
 
-        return "admin-products";
+        return "redirect:/admin/products";
     }
 
     @GetMapping("/admin/products")

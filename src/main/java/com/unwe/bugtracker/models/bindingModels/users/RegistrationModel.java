@@ -11,13 +11,13 @@ import java.util.List;
 @IsPasswordsMatching
 public class RegistrationModel {
 
-    @Size(min = 5, message = "Username too short")
+    @Size(min = 4, message = "Username too short")
     private String username;
 
-    @Size(min = 5, message = "Password too short")
+    @Size(min = 4, message = "Password too short")
     private String password;
 
-    @Size(min = 5, message = "Confirm Password shorter than 5 symbols")
+    @Size(min = 4, message = "Confirm Password shorter than 5 symbols")
     private String confirmPassword;
 
     @Size(min = 5, message = "Full name too short")

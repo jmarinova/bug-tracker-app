@@ -1,6 +1,7 @@
 package com.unwe.bugtracker.entities;
 
 import com.unwe.bugtracker.enums.IssueType;
+import com.unwe.bugtracker.enums.Severity;
 import com.unwe.bugtracker.enums.Status;
 
 import javax.persistence.*;
@@ -24,6 +25,9 @@ public class Issue {
 
     @Enumerated(value = EnumType.STRING)
     private IssueType issueType;
+
+    @Enumerated(value = EnumType.STRING)
+    private Severity severity;
 
     @ManyToOne
     @JoinColumn(name = "product_id", updatable = false)
@@ -124,5 +128,13 @@ public class Issue {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Severity getSeverity() {
+        return severity;
+    }
+
+    public void setSeverity(Severity severity) {
+        this.severity = severity;
     }
 }

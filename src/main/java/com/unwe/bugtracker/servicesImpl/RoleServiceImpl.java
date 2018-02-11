@@ -15,7 +15,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role findByAuthority(String auth) {
-       Role role = this.roleRepository.findByAuthority(auth);
+       Role role = this.roleRepository.findByAuthority(Constants.ROLE + auth);
 
        if(role == null){
            Role newRole = new Role();

@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.dsig.CanonicalizationMethod;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +49,11 @@ public class CompanyServiceImpl implements CompanyService {
         this.companyRepository.save(company);
     }
 
+    @Override
+    public void update(EditCompanyModel editCompanyModel) {
+        Company company = this.modelMapper.map(editCompanyModel, Company.class);
+        this.companyRepository.save(company);
+    }
 
 
     @Override

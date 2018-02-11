@@ -1,5 +1,6 @@
 package com.unwe.bugtracker.repositories;
 
+import com.unwe.bugtracker.entities.Role;
 import com.unwe.bugtracker.entities.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -16,4 +17,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query("SELECT u FROM User AS u")
     List<User> findAll();
+
+    List<User> findAllByAuthorities(List<Role> roles);
 }

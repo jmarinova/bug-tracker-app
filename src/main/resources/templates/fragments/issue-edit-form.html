@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-<form method="post" th:object="${addIssueBindingModel}" th:fragment="add-form">
+<form method="post" th:object="${editIssueBindingModel}" th:fragment="edit-form">
     <div class="form-group">
         <label class="form-control-label" for="nameId">Name</label>
         <input type="text" class="form-control" id="nameId" aria-describedby="nameHelp" th:field="*{name}"/>
@@ -14,36 +14,40 @@
         <div id="descHelp" class="form-control-feedback" th:each="error : ${#fields.errors('description')}" th:text="${error}">Error Message</div>
     </div>
 
+    <div class="form-group">
+        <label for="exampleSelect1">Status</label>
+        <select class="form-control" id="exampleSelect1" th:field="*{status}">
+            <option th:each="status : ${statuses}" th:value="${status}" th:text="${#strings.capitalize(#strings.toLowerCase(#strings.replace(status, '_', ' ')))}">1</option>
+        </select>
+    </div>
+
+
     <fieldset class="form-group" th:classappend="${#fields.hasErrors('severity')} ?'has-danger'">
         <legend>Choose severity</legend>
         <div class="form-check" th:each="severity : ${severities}">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" checked="true" th:value="${severity}" th:text="| ${severity}|" th:field="*{severity}" />
+                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" checked="true" th:value="${severity}" th:text="| ${#strings.capitalize(#strings.toLowerCase(severity))} |" th:field="*{severity}" />
             </label>
         </div>
         <div id="statHelp" class="form-control-feedback" th:each="error : ${#fields.errors('severity')}" th:text="${error}">Error Message</div>
     </fieldset>
 
+
     <div class="form-group">
         <label for="exampleSelect1">Issue type</label>
-        <select class="form-control" id="exampleSelect1" th:field="*{issueType}">
-            <option th:each="issueType : ${issueTypes}" th:value="${issueType}" th:text="${#strings.capitalize(#strings.toLowerCase(issueType))}">1</option>
+        <select class="form-control" id="issueType" th:field="*{issueType}">
+            <option th:each="issueType : ${issueTypes}" th:value="${issueType}" th:text="| ${#strings.capitalize(#strings.toLowerCase(issueType))} |">1</option>
         </select>
     </div>
 
+    <div class="form-group">
+        <label for="filter">Assign to:</label>
+        <select multiple="false" class="form-control" id="filter" name="filter" th:field="*{assignedTo}">
+            <option href="" th:each="user : ${devUsers}" th:value="${user.getId()}" th:text="${user.getUsername()}">1</option>
+        </select>
+    </div>
 
-    <fieldset multiple="multiple" class="form-group" th:classappend="${#fields.hasErrors('product')}? 'has-danger'">
-        <legend>Choose product</legend>
-        <div class="form-check" th:each="product,iter : ${products}">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" id="optionsRadios1" th:value="${product.getName()}" th:field="*{product}"/>
-                <span th:text="${product.getName() + ' - version ' + product.getVersion()}"></span>
-            </label>
-        </div>
-        <small id="toHelp" class="form-control-feedback" th:each="error : ${#fields.errors('product')}" th:text="${error}">Error Message</small>
-    </fieldset>
-
-    <button type="submit" class="btn btn-default">Add</button>
+    <button type="submit" class="btn btn-default">Edit</button>
     <ul>
         <li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
     </ul>

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <title>Home</title>
@@ -22,6 +24,7 @@
             <th>Contact phone number</th>
             <th>Start contract date</th>
             <th>End contract date</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -32,6 +35,9 @@
             <td th:text="*{contactPhoneNumber}">contactPhoneNumber</td>
             <td th:text="*{#dates.format(startContractDate, 'yyyy-MM-dd')}">startContractDate</td>
             <td th:text="*{#dates.format(endContractDate, 'yyyy-MM-dd')}">endContractDate</td>
+            <div sec:authorize="hasRole('ADMIN')">
+                <td><a th:href="@{/admin/companies/edit/{id}(id=*{id})}" class="btn btn-outline-warning">Edit</a></td>
+            </div>
         </tr>
         </tbody>
     </table>

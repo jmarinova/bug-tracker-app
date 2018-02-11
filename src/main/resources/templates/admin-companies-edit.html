@@ -9,7 +9,7 @@
 <nav th:replace="fragments/menu::menu"></nav>
 <br/>
 <div class="container">
-    <h1>Add new Company</h1>
+    <h1>Edit Client</h1>
     <form method="post" th:object="${editCompanyModel}">
         <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-danger'">
             <label class="form-control-label" for="inputName">Company name</label>
@@ -51,7 +51,7 @@
             <small id="toHelp" class="form-control-feedback" th:each="error : ${#fields.errors('products')}" th:text="${error}">Error Message</small>
         </fieldset>
 
-        <input type="submit" class="btn btn-primary"/>
+        <input type="submit" class="btn btn-primary" value="Edit"/>
     </form>
 </div>
 <script th:src="@{/jquery/jquery.min.js}"></script>
