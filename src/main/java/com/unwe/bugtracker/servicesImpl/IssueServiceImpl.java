@@ -81,8 +81,6 @@ public class IssueServiceImpl implements IssueService {
     @Override
     public void add(AddIssueBindingModel addIssueBindingModel, Principal principal) {
         Issue issue = this.modelMapper.map(addIssueBindingModel, Issue.class);
-        Product product = this.productService.findByName(addIssueBindingModel.getProduct());
-        issue.setProduct(product);
 
         User user = this.userService.findByUsername(principal.getName());
         issue.setAuthor(user);

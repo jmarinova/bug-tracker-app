@@ -10,6 +10,8 @@ import com.unwe.bugtracker.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -70,7 +73,8 @@ public class UserController {
     public String getLoginPage(@RequestParam(required = false) String error,
                                @RequestParam(required = false) String token,
                                Model model,
-                               WebRequest request){
+                               WebRequest request,
+                               Principal principal){
 //        Locale locale = request.getLocale();
 //
 //        VerificationToken verificationToken = this.userService.getVerificationToken(token);
@@ -88,9 +92,9 @@ public class UserController {
 //            return "redirect:/badUser";
 //        }
 //
-//        if(error != null){
-//            model.addAttribute("error", Constants.INVALID_CREDENTIALS);
-//        }
+        if(error != null){
+            model.addAttribute("error", Constants.INVALID_CREDENTIALS);
+        }
 //        user.setEnabled(true);
 //        this.userService.saveRegisteredUser(user);
 

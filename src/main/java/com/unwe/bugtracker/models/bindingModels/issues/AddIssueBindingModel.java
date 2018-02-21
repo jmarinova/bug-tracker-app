@@ -17,10 +17,7 @@ public class AddIssueBindingModel {
     private String description;
 
     @NotNull(message = "Product cannot be null!")
-    private String product;
-//
-//    @NotNull(message = "Status cannot be null!")
-//    private Status status;
+    private Product product;
 
     @NotNull(message = "Severity cannot be null!")
     private Severity severity;
@@ -46,21 +43,6 @@ public class AddIssueBindingModel {
         this.description = description;
     }
 
-    public String getProduct() {
-        return product;
-    }
-
-    public void setProduct(String product) {
-        this.product = product;
-    }
-//
-//    public Status getStatus() {
-//        return status;
-//    }
-//
-//    public void setStatus(Status status) {
-//        this.status = status;
-//    }
 
     public IssueType getIssueType() {
         return issueType;
@@ -84,5 +66,13 @@ public class AddIssueBindingModel {
 
     public void setSeverity(Severity severity) {
         this.severity = severity;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

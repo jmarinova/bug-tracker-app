@@ -11,6 +11,7 @@ import java.util.List;
 @IsPasswordsMatching
 public class RegistrationModel {
 
+    @NotNull(message = "Username cannot be null!")
     @Size(min = 4, message = "Username too short")
     private String username;
 

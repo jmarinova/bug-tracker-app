@@ -59,8 +59,8 @@
             <td th:text="*{product.getName() + ' - version' + product.getVersion()}">Product affected</td>
             <td th:text="*{author.getUsername()}">Author</td>
 
-            <div th:if=" ${currentUser.getUsername()} == 'devusr' or ${currentUser.getUsername()} == 'admin' or *{author.getCompany()} == ${currentUser.getCompany()}">
-                <div sec:authorize="(hasRole('USER') or hasRole('ADMIN'))">
+            <div th:if=" ${currentUser.getAuthorities().get(0).authority} == 'ROLE_DEV' or ${currentUser.getUsername()} == 'admin' or *{author.getCompany()} == ${currentUser.getCompany()}">
+                <div sec:authorize="(hasRole('USER') or hasRole('DEV') or hasRole('ADMIN'))">
                     <td><a th:href="@{/issues/edit/{id}(id=${issue.id})}" class="btn btn-outline-warning">Edit</a></td>
                 </div>
             </div>

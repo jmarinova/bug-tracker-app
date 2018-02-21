@@ -36,7 +36,7 @@
         <legend>Choose product</legend>
         <div class="form-check" th:each="product,iter : ${products}">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" id="optionsRadios1" th:value="${product.getName()}" th:field="*{product}"/>
+                <input type="radio" class="form-check-input" id="optionsRadios1" th:value="${product}" th:field="*{product}"/>
                 <span th:text="${product.getName() + ' - version ' + product.getVersion()}"></span>
             </label>
         </div>

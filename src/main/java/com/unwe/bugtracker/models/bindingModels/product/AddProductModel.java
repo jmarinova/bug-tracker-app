@@ -11,7 +11,7 @@ import java.util.Date;
 public class AddProductModel {
 
     @NotNull(message = "Name cannot be null!")
-    @Size(min = 3, max = 30, message = "Invalid name!")
+    @Size(min = 3, max = 30, message = "Name length must be between 3 and 30 symbols!")
     private String name;
 
     @NotNull(message = "Version cannot be null!")
@@ -20,6 +20,7 @@ public class AddProductModel {
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "mm-dd-yyyy")
+    @NotNull(message = "Release date cannot be null!")
     private String releaseDate;
 
     public String getName() {
